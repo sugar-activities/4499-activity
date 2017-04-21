@@ -1,0 +1,7 @@
+[Activity]
+name = Chrome
+activity_version = 1
+service_name = org.laptop.ChromeActivity
+icon = iconoactivitychrome
+exec = ./google-chrome
+

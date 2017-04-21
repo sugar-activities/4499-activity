@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Copyright (c) 2009 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Let the wrapped binary know that it has been run through the wrapper
+export CHROME_WRAPPER="`readlink -f "$0"`"
+
+PROGDIR="`dirname "$CHROME_WRAPPER"`"
+
+case ":$PATH:" in
+  *:$PROGDIR:*)
+    # $PATH already contains $PROGDIR
+    ;;
+  *)
+    # Append $PROGDIR to $PATH
+    export PATH="$PATH:$PROGDIR"
+    ;;
+esac
+
+# Always use our versions of ffmpeg libs.
+LD_LIBRARY_PATH="$PROGDIR:$LD_LIBRARY_PATH"
+
+# Save the GTK_PATH
+export CHROMIUM_SAVED_GTK_PATH="$GTK_PATH"
+
+if [ -d "$PROGDIR/lib" ]; then
+  LD_LIBRARY_PATH="$PROGDIR/lib:$LD_LIBRARY_PATH"
+  if [ -d "/usr/lib/gtk-2.0" ]; then
+    export GTK_PATH=/usr/lib/gtk-2.0:$GTK_PATH
+  fi
+fi
+
+export LD_LIBRARY_PATH
+
+exec -a "$0" "$PROGDIR/chrome" --enable-plugins "$@"

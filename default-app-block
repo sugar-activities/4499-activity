@@ -1,0 +1,10 @@
+    <web-browser>
+      <name>Google Chrome</name>
+      <executable>/opt/google/chrome/google-chrome</executable>
+      <command>/opt/google/chrome/google-chrome %s</command>
+      <icon-name>google-chrome</icon-name>
+      <run-in-terminal>false</run-in-terminal>
+      <netscape-remote>false</netscape-remote>
+      <!-- for "open in new window/tab" support, change netscape-remote
+           to true above, and add tab-command and win-command below -->
+    </web-browser>
